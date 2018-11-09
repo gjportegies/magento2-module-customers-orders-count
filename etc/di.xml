@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Api\Data\CustomerInterface">
+        <plugin name="customerOrdersCountExtensionAttributesLoading" type="SpringImport\CustomersOrdersCount\Plugin\Customer\CustomerAttributesLoad"/>
+    </type>
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin name="customerOrdersCountExtensionAttributesSetting" type="SpringImport\CustomersOrdersCount\Plugin\Customer\CustomerGet"/>
+    </type>
+    <type name="Magento\Customer\Model\Customer">
+        <plugin name="customerOrdersCountExtendDatamodel" type="SpringImport\CustomersOrdersCount\Plugin\Customer\CustomerPlugin"/>
+    </type>
+    <type name="Magento\Customer\Model\ResourceModel\Customer\Collection">
+        <plugin name="customerOrdersCountProcessCollection" type="SpringImport\CustomersOrdersCount\Plugin\Customer\CollectionPlugin"/>
+    </type>
+    <virtualType name="Magento\Customer\Model\Api\SearchCriteria\CollectionProcessor\CustomerFilterProcessor" type="Magento\Eav\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="orders_count" xsi:type="object">SpringImport\CustomersOrdersCount\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\OrdersCountFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>
